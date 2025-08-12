@@ -1,0 +1,92 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #666; /* Gray background as in the screenshot */
+    overflow: auto; /* Allow scrolling if content overflows */
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    backdrop-filter: blur(5px); /* Subtle blur effect */
+    padding: 30px;
+    border-radius: 20px; /* Rounded corners */
+    width: 100%;
+    max-width: 400px; /* Limit width to prevent overflow */
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+h2 {
+    color: #333; /* Darker text for contrast */
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input {
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px; /* Rounded inputs */
+    background: rgba(255, 255, 255, 0.2);
+    color: #333; /* Dark text for readability */
+    font-size: 16px;
+}
+
+input::placeholder {
+    color: #666; /* Gray placeholder text */
+}
+
+input:focus {
+    outline: none;
+    border-color: #999;
+}
+
+button {
+    padding: 12px;
+    background: #fff; /* White button */
+    color: #333; /* Dark text */
+    border: none;
+    border-radius: 25px; /* Rounded button */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+p {
+    color: #333;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+a {
+    color: #007bff; /* Blue link to match the screenshot */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Ensure responsiveness */
+@media (max-width: 450px) {
+    .container {
+        padding: 20px;
+        margin: 10px; /* Add margin to prevent edge overflow */
+    }
+}

@@ -1,0 +1,26 @@
+<!-- Basic HTML structure for the login page -->
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart City Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container"> <!-- Container for the login form -->
+        <h2>Welcome <br> To <br> Smart City Management System</h2>
+        <h2>Login</h2> <!-- Form heading -->
+        <form action="login.php" method="POST"> <!-- Form submits to login.php -->
+            <!-- Email input field -->
+            <input type="email" name="email" placeholder="Email" required>
+            <!-- Password input field -->
+            <input type="password" name="password" placeholder="Password" required>
+            <!-- Submit button -->
+            <button type="submit">Login</button>
+        </form>
+        <!-- Link to registration page -->
+        <p>Don't have an account? <a href="register.html">Register</a></p>
+    </div>
+</body>
+</html>
