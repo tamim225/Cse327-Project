@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Educational Institutes</title>
+    <link rel="stylesheet" href="educational_institutes.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Educational Institutes</h2>
+        <?php if ($_SESSION["Role"] == "Admin"): ?>
+            <h3>Add Institute</h3>
+            <form action="educational_institutes.php" method="POST">
+                <input type="hidden" name="action" value="create">
+                <label>Name:</label>
+                <input type="text" name="name" required>
+                <label>Address:</label>
+                <textarea name="address" required></textarea>
+                <label>Type:</label>
+                <input type="text" name="type" required>
+                <button type="submit">Add</button>
+            </form>
+        <?php endif; ?>
+        <h3>Institutes</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Type</th>
+                <th>Status</th>
+                <?php if ($_SESSION["Role"] == "Admin"): ?>
+                    <th>Actions</th>
+                <?php endif; ?>
+            </tr>
+            <?php foreach ($institutes as $institute): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($institute["InstituteID"]); ?></td>
+                    <td><?php echo htmlspecialchars($institute["Name"]); ?></td>
+                    <td><?php echo htmlspecialchars($institute["Address"]); ?></td>
+                    <td><?php echo htmlspecialchars($institute["Type"]); ?></td>
+                    <td><?php echo htmlspecialchars($institute["Status"]); ?></td>
+                    <?php if ($_SESSION["Role"] == "Admin"): ?>
+                        <td>
+                            <a href="educational_institutes.php?action=edit&id=<?php echo $institute["InstituteID"]; ?>">Edit</a>
+                            <a href="educational_institutes.php?action=delete&id=<?php echo $institute["InstituteID"]; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php if (isset($edit_institute) && $_SESSION["Role"] == "Admin"): ?>
+            <h3>Edit Institute</h3>
+            <form action="educational_institutes.php" method="POST">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="id" value="<?php echo $edit_institute["InstituteID"]; ?>">
+                <label>Name:</label>
+                <input type="text" name="name" value="<?php echo htmlspecialchars($edit_institute["Name"]); ?>" required>
+                <label>Address:</label>
+                <textarea name="address" required><?php echo htmlspecialchars($edit_institute["Address"]); ?></textarea>
+                <label>Type:</label>
+                <input type="text" name="type" value="<?php echo htmlspecialchars($edit_institute["Type"]); ?>" required>
+                <label>Status:</label>
+                <select name="status">
+                    <option value="Active" <?php echo $edit_institute["Status"] == "Active" ? "selected" : ""; ?>>Active</option>
+                    <option value="Inactive" <?php echo $edit_institute["Status"] == "Inactive" ? "selected" : ""; ?>>Inactive</option>
+                </select>
+                <button type="submit">Update</button>
+            </form>
+        <?php endif; ?>
+        <a href="<?php echo $_SESSION["Role"] == 'Admin' ? 'admin_dashboard.php' : 'user_dashboard.php'; ?>">Back to Dashboard</a>
+    </div>
+</body>
+</html>
