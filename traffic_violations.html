@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic Violations</title>
+    <link rel="stylesheet" href="traffic_violations.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Traffic Violations</h2>
+        <?php if ($_SESSION["Role"] == "Admin"): ?>
+            <h3>Add Traffic Violation</h3>
+            <form action="traffic_violations.php" method="POST">
+                <input type="hidden" name="action" value="create">
+                <label>Citizen ID:</label>
+                <input type="number" name="citizen_id" required>
+                <label>Description:</label>
+                <textarea name="description" required></textarea>
+                <label>Fine Amount:</label>
+                <input type="number" step="0.01" name="fine_amount" required>
+                <label>Date Occurred:</label>
+                <input type="date" name="date_occurred" required>
+                <button type="submit">Add</button>
+            </form>
+        <?php endif; ?>
+        <h3>Your Violations</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Fine Amount</th>
+                <th>Date Occurred</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            <?php foreach ($violations as $violation): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($violation["ViolationID"]); ?></td>
+                    <td><?php echo htmlspecialchars($violation["Description"]); ?></td>
+                    <td><?php echo htmlspecialchars($violation["FineAmount"]); ?></td>
+                    <td><?php echo htmlspecialchars($violation["DateOccurred"]); ?></td>
+                    <td><?php echo htmlspecialchars($violation["Status"]); ?></td>
+                    <td>
+                        <?php if ($violation["Status"] == "Pending" && $_SESSION["Role"] == "User"): ?>
+                            <a href="traffic_violations.php?action=pay&id=<?php echo $violation["ViolationID"]; ?>">Pay</a>
+                        <?php endif; ?>
+                        <?php if ($_SESSION["Role"] == "Admin"): ?>
+                            <a href="traffic_violations.php?action=edit&id=<?php echo $violation["ViolationID"]; ?>">Edit</a>
+                            <a href="traffic_violations.php?action=delete&id=<?php echo $violation["ViolationID"]; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php if (isset($edit_violation) && $_SESSION["Role"] == "Admin"): ?>
+            <h3>Edit Traffic Violation</h3>
+            <form action="traffic_violations.php" method="POST">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="id" value="<?php echo $edit_violation["ViolationID"]; ?>">
+                <label>Citizen ID:</label>
+                <input type="number" name="citizen_id" value="<?php echo htmlspecialchars($edit_violation["CitizenID"]); ?>" required>
+                <label>Description:</label>
+                <textarea name="description" required><?php echo htmlspecialchars($edit_violation["Description"]); ?></textarea>
+                <label>Fine Amount:</label>
+                <input type="number" step="0.01" name="fine_amount" value="<?php echo htmlspecialchars($edit_violation["FineAmount"]); ?>" required>
+                <label>Date Occurred:</label>
+                <input type="date" name="date_occurred" value="<?php echo htmlspecialchars($edit_violation["DateOccurred"]); ?>" required>
+                <label>Status:</label>
+                <select name="status">
+                    <option value="Pending" <?php echo $edit_violation["Status"] == "Pending" ? "selected" : ""; ?>>Pending</option>
+                    <option value="Paid" <?php echo $edit_violation["Status"] == "Paid" ? "selected" : ""; ?>>Paid</option>
+                </select>
+                <button type="submit">Update</button>
+            </form>
+        <?php endif; ?>
+        <a href="<?php echo $_SESSION["Role"] == 'Admin' ? 'admin_dashboard.php' : 'user_dashboard.php'; ?>">Back to Dashboard</a>
+    </div>
+</body>
+</html>

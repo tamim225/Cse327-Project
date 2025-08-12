@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Smart City</title>
+    <link rel="stylesheet" href="admin_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Smart City Admin</h3>
+            <a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="complaints.php"><i class="fas fa-exclamation-circle"></i> Complaints</a>
+            <a href="emergency.php"><i class="fas fa-ambulance"></i> Emergency Services</a>
+            <a href="events.php"><i class="fas fa-calendar-alt"></i> Events</a>
+            <a href="transport.php"><i class="fas fa-bus"></i> Transport</a>
+            <a href="utility_bills.php"><i class="fas fa-file-invoice-dollar"></i> Utility Bills</a>
+            <a href="waste_management.php"><i class="fas fa-trash-alt"></i> Waste Management</a>
+            <a href="educational_institutes.php"><i class="fas fa-school"></i> Educational Institutes</a>
+            <a href="traffic_violations.php"><i class="fas fa-traffic-light"></i> Traffic Violations</a>
+            <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <h2>&nbsp&nbsp&nbsp&nbsp Admin Dashboard</h2>
+                <div class="profile-box">
+                    <a href="profile.php">
+                        <?php if ($user['ProfilePicture']): ?>
+                            <img src="<?php echo htmlspecialchars($user['ProfilePicture']); ?>" alt="Profile Picture">
+                        <?php else: ?>
+                            <?php echo htmlspecialchars(substr($user["FullName"], 0, 2)); ?>
+                        <?php endif; ?>
+                    </a>
+                </div>
+            </div>
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <a href="complaints.php" class="dashboard-box" style="background-color: #d6d9ff;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                    <?php if ($pending_complaints > 0): ?>
+                        <span class="badge"><?php echo $pending_complaints; ?></span>
+                    <?php endif; ?>
+                </a>
+                <a href="emergency.php" class="dashboard-box" style="background-color: #ffd6a5;">
+                    <i class="fas fa-ambulance"></i>
+                    <span>Emergency Services</span>
+                    <?php if ($pending_emergencies > 0): ?>
+                        <span class="badge"><?php echo $pending_emergencies; ?></span>
+                    <?php endif; ?>
+                </a>
+                <a href="utility_bills.php" class="dashboard-box" style="background-color: #a5d8ff;">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Utility Bills</span>
+                    <?php if ($unpaid_bills > 0): ?>
+                        <span class="badge"><?php echo $unpaid_bills; ?></span>
+                    <?php endif; ?>
+                </a>
+                <a href="traffic_violations.php" class="dashboard-box" style="background-color: #ffccff;">
+                    <i class="fas fa-traffic-light"></i>
+                    <span>Traffic Violations</span>
+                    <?php if ($pending_violations > 0): ?>
+                        <span class="badge"><?php echo $pending_violations; ?></span>
+                    <?php endif; ?>
+                </a>
+                <a href="events.php" class="dashboard-box" style="background-color: #d6d9ff;">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Events</span>
+                </a>
+                <a href="transport.php" class="dashboard-box" style="background-color: #ffd6a5;">
+                    <i class="fas fa-bus"></i>
+                    <span>Transport</span>
+                </a>
+                <a href="waste_management.php" class="dashboard-box" style="background-color: #a5d8ff;">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Waste Management</span>
+                </a>
+                <a href="educational_institutes.php" class="dashboard-box" style="background-color: #ffccff;">
+                    <i class="fas fa-school"></i>
+                    <span>Educational Institutes</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
