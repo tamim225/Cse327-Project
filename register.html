@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Set the page title -->
+    <title>Register - Smart City</title>
+    <!-- Link to the external CSS stylesheet -->
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <!-- Container for the registration form -->
+    <div class="register-container">
+        <!-- Main heading for the registration page -->
+        <h2>Register</h2>
+        <form action="register.php" method="POST">
+            <!-- Input field for full name -->
+            <label>Full Name:</label>
+            <input type="text" name="full_name" required>
+            <!-- Input field for email -->
+            <label>Email:</label>
+            <input type="email" name="email" required>
+            <!-- Input field for password -->
+            <label>Password:</label>
+            <input type="password" name="password" required>
+            <!-- Textarea for address -->
+            <label>Address:</label>
+            <textarea name="address" required></textarea>
+            <!-- Input field for phone number -->
+            <label>Phone:</label>
+            <input type="text" name="phone" required>
+            <!-- Submit button for the registration form -->
+            <button type="submit">Register</button>
+        </form>
+        <!-- Link to the login page for existing users -->
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+</body>
+</html>
