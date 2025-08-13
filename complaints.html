@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Set the page title -->
+    <title>Complaints</title>
+    <link rel="stylesheet" href="complaints.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Complaints</h2>
+        <!-- Section for filing a new complaint, visible only to non-admin users -->
+        <?php if ($_SESSION["Role"] == "User"): ?>
+            <h3>File a Complaint</h3>
+            <form action="complaints.php" method="POST">
+                <input type="hidden" name="action" value="create">
+                <!-- Input field for complaint subject -->
+                <label>Subject:</label>
+                <input type="text" name="subject" required>
+                <!-- Textarea for complaint description -->
+                <label>Description:</label>
+                <textarea name="description" required></textarea>
+                <!-- Submit button for the form -->
+                <button type="submit">Submit</button>
+            </form>
+        <?php endif; ?>
+        <!-- Section to display the list of complaints -->
+        <h3>Your Complaints</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Date Filed</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            <?php foreach ($complaints as $complaint): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($complaint["ComplaintID"]); ?></td>
+                    <td><?php echo htmlspecialchars($complaint["Subject"]); ?></td>
+                    <td><?php echo htmlspecialchars($complaint["Description"]); ?></td>
+                    <td><?php echo htmlspecialchars($complaint["DateFiled"]); ?></td>
+                    <td><?php echo htmlspecialchars($complaint["Status"]); ?></td>
+                    <td>
+                        <?php if ($complaint["Status"] == "Pending" || $_SESSION["Role"] == "Admin"): ?>
+                        <!-- Links for editing and deleting complaints -->
+                            <a href="complaints.php?action=edit&id=<?php echo $complaint["ComplaintID"]; ?>">Edit</a>
+                            <a href="complaints.php?action=delete&id=<?php echo $complaint["ComplaintID"]; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php if (isset($edit_complaint)): ?>
+            <h3>Edit Complaint</h3>
+            <form action="complaints.php" method="POST">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="id" value="<?php echo $edit_complaint["ComplaintID"]; ?>">
+                <label>Subject:</label>
+                <input type="text" name="subject" value="<?php echo htmlspecialchars($edit_complaint["Subject"]); ?>" required>
+                <label>Description:</label>
+                <textarea name="description" required><?php echo htmlspecialchars($edit_complaint["Description"]); ?></textarea>
+                <?php if ($_SESSION["Role"] == "Admin"): ?>
+                    <label>Status:</label>
+                    <select name="status">
+                        <option value="Pending" <?php echo $edit_complaint["Status"] == "Pending" ? "selected" : ""; ?>>Pending</option>
+                        <option value="In Progress" <?php echo $edit_complaint["Status"] == "In Progress" ? "selected" : ""; ?>>In Progress</option>
+                        <option value="Resolved" <?php echo $edit_complaint["Status"] == "Resolved" ? "selected" : ""; ?>>Resolved</option>
+                    </select>
+                <?php endif; ?>
+                <!-- Submit button for updating the complaint -->
+                <button type="submit">Update</button>
+            </form>
+        <?php endif; ?>
+        <!-- Link to return to the dashboard -->
+        <a href="<?php echo $_SESSION["Role"] == 'Admin' ? 'admin_dashboard.php' : 'user_dashboard.php'; ?>">Back to Dashboard</a>
+    </div>
+</body>
+</html>
