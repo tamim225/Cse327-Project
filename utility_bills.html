@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Utility Bills</title> <!-- Title shown in browser tab -->
+    <link rel="stylesheet" href="utility_bills.css"> <!-- Link to external CSS stylesheet -->
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>Utility Bills</h2> <!-- Page heading -->
+        <?php if ($_SESSION["Role"] == "Admin"): ?>
+        <h3>Add Utility Bill</h3> <!-- Subheading for the add bill form -->
+
+        <form action="utility_bills.php" method="POST"> <!-- Hidden input to tell backend this is a "create" action -->
+
+            <input type="hidden" name="action" value="create"> <!-- Citizen ID input -->
+
+            <label>Citizen ID:</label>
+            <input type="number" name="citizen_id" required>
+            <label>Bill Type:</label> <!-- Bill type input -->
+            <input type="text" name="bill_type" required>
+            <label>Amount:</label> <!-- Amount input -->
+            <input type="number" step="0.01" name="amount" required>
+            <label>Due Date:</label> <!-- Due date input -->
+            <input type="date" name="due_date" required>
+            <button type="submit">Add</button> <!-- Submit button to add bill -->
+        </form>
+        <?php endif; ?>
+        <h3>Your Bills</h3> <!-- Heading for bills table -->
+        <table>
+            <tr> <!-- Table headers -->
+                <th>ID</th>
+                <th>Bill Type</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr> <!-- Display bill details -->
+            <?php foreach ($bills as $bill): ?>
+            <tr>
+                <td>
+                    <?php echo htmlspecialchars($bill["BillID"]); ?>
+                </td>
+                <td>
+                    <?php echo htmlspecialchars($bill["BillType"]); ?>
+                </td>
+                <td>
+                    <?php echo htmlspecialchars($bill["Amount"]); ?>
+                </td>
+                <td>
+                    <?php echo htmlspecialchars($bill["DueDate"]); ?>
+                </td>
+                <td>
+                    <?php echo htmlspecialchars($bill["Status"]); ?>
+                </td>
+                <td>
+                    <?php if ($bill["Status"] == "Unpaid" && $_SESSION["Role"] == "User"): ?>
+                    <a href="utility_bills.php?action=pay&id=<?php echo $bill[" BillID"]; ?>">Pay</a>
+                    <?php endif; ?>
+                    <?php if ($_SESSION["Role"] == "Admin"): ?>
+                    <a href="utility_bills.php?action=edit&id=<?php echo $bill[" BillID"]; ?>">Edit</a>
+                    <a href="utility_bills.php?action=delete&id=<?php echo $bill[" BillID"]; ?>" onclick="return
+                        confirm('Are you sure?')">Delete</a> <!-- Delete link with confirmation popup -->
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php if (isset($edit_bill) && $_SESSION["Role"] == "Admin"): ?>
+        <h3>Edit Utility Bill</h3> <!-- Subheading for edit form -->
+        <form action="utility_bills.php" method="POST">
+
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="id" value="<?php echo $edit_bill
+                [" BillID"]; ?>"> <!-- Hidden input for bill ID being edited -->
+
+            <label>Citizen ID:</label> <!-- Citizen ID input with pre-filled value -->
+            <input type="number" name="citizen_id" value="<?php echo htmlspecialchars($edit_bill[" CitizenID"]); ?>"
+            required>
+
+            <label>Bill Type:</label> <!-- Bill Type input with pre-filled value -->
+            <input type="text" name="bill_type" value="<?php echo htmlspecialchars($edit_bill[" BillType"]); ?>"
+            required>
+
+            <label>Amount:</label> <!-- Amount input with pre-filled value -->
+            <input type="number" step="0.01" name="amount" value="<?php echo htmlspecialchars($edit_bill[" Amount"]);
+                ?>" required>
+
+            <!-- Due date input with pre-filled value -->
+            <label>Due Date:</label>
+            <input type="date" name="due_date" value="<?php echo htmlspecialchars($edit_bill[" DueDate"]); ?>" required>
+
+
+            <!-- Status dropdown with selected option -->
+            <label>Status:</label>
+            <select name="status">
+                <option value="Unpaid" <?php echo $edit_bill["Status"]=="Unpaid" ? "selected" : "" ; ?>>Unpaid</option>
+                <option value="Paid" <?php echo $edit_bill["Status"]=="Paid" ? "selected" : "" ; ?>>Paid</option>
+            </select>
+            <button type="submit">Update</button> <!-- Submit button to update bill -->
+        </form>
+        <?php endif; ?>
+        <a href="<?php echo $_SESSION[" Role"]=='Admin' ? 'admin_dashboard.php' : 'user_dashboard.php' ; ?>">Back to
+            Dashboard</a>
+    </div>
+</body>
+
+</html>
