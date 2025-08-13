@@ -1,0 +1,81 @@
+
+body {
+    font-family: Arial, sans-serif; /* Use clean, easy-to-read font */
+    background-color: #f4f4f4; /* Light gray page background */
+    margin: 0; /* Remove default margin */
+}
+
+/* Main container for emergency form/data */
+.container {
+    max-width: 1000px; /* Restrict maximum width */
+    margin: 20px auto; /* Center horizontally */
+    padding: 20px; /* Inner padding for spacing */
+    background-color: white; /* White content area */
+    border-radius: 8px; /* Rounded container corners */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Light shadow effect */
+}
+
+/* Headings color */
+h2, h3 {
+    color: #333; /* Dark gray text */
+}
+
+/* Emergency form layout */
+form {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 10px; /* Space between form fields */
+    margin-bottom: 20px; /* Space below form */
+}
+
+/* Inputs, textareas, and dropdown menus */
+input, textarea, select {
+    padding: 10px; /* Add space inside fields */
+    border: 1px solid #ddd; /* Light gray borders */
+    border-radius: 4px; /* Rounded edges */
+}
+
+/* Emergency action button */
+button {
+    padding: 10px;
+    background-color: #dc3545; /* Red for urgency */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded edges */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Hover effect for emergency button */
+button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Table styles */
+table {
+    width: 100%; /* Full-width table */
+    border-collapse: collapse; /* Remove space between cells */
+    margin-bottom: 20px; /* Space below table */
+}
+
+/* Cell padding and borders */
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd; /* Light gray border */
+    text-align: left; /* Left-aligned text */
+}
+
+/* Table header background */
+th {
+    background-color: #f8f9fa; /* Light gray header background */
+}
+
+/* Link styles */
+a {
+    color: #dc3545; /* Red links for emergency theme */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Hover effect for links */
+a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}

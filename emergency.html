@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emergency Services</title>
+    <!-- Link to emergency-specific CSS -->
+    <link rel="stylesheet" href="emergency.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Emergency Services</h2>
+
+        <!-- USER: Emergency Request Form -->
+        <?php if ($_SESSION["Role"] == "User"): ?>
+            <h3>Request Emergency Service</h3>
+            <form action="emergency.php" method="POST">
+                <!-- Hidden input to mark as 'create' action -->
+                <input type="hidden" name="action" value="create">
+
+                <!-- Type of emergency -->
+                <label>Type:</label>
+                <select name="type" required>
+                    <option value="Medical">Medical</option>
+                    <option value="Fire">Fire</option>
+                    <option value="Police">Police</option>
+                </select>
+
+                <!-- Description of the emergency -->
+                <label>Description:</label>
+                <textarea name="description" required></textarea>
+
+                <!-- Submit button -->
+                <button type="submit">Submit</button>
+            </form>
+        <?php endif; ?>
+
+        <!-- List of Emergency Requests -->
+        <h3>Emergency Requests</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Date Requested</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+
+            <!-- Loop through each request and display in table -->
+            <?php foreach ($requests as $request): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($request["RequestID"]); ?></td>
+                    <td><?php echo htmlspecialchars($request["Type"]); ?></td>
+                    <td><?php echo htmlspecialchars($request["Description"]); ?></td>
+                    <td><?php echo htmlspecialchars($request["DateRequested"]); ?></td>
+                    <td><?php echo htmlspecialchars($request["Status"]); ?></td>
+                    <td>
+                        <!-- Show Edit/Delete if request is pending OR if user is Admin -->
+                        <?php if ($request["Status"] == "Pending" || $_SESSION["Role"] == "Admin"): ?>
+                            <a href="emergency.php?action=edit&id=<?php echo $request["RequestID"]; ?>">Edit</a>
+                            <a href="emergency.php?action=delete&id=<?php echo $request["RequestID"]; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+
+        <!-- Edit Request Form (visible only if editing) -->
+        <?php if (isset($edit_request)): ?>
+            <h3>Edit Emergency Request</h3>
+            <form action="emergency.php" method="POST">
+                <!-- Hidden inputs for update action and request ID -->
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="id" value="<?php echo $edit_request["RequestID"]; ?>">
+
+                <!-- Type of emergency -->
+                <label>Type:</label>
+                <select name="type" required>
+                    <option value="Medical" <?php echo $edit_request["Type"] == "Medical" ? "selected" : ""; ?>>Medical</option>
+                    <option value="Fire" <?php echo $edit_request["Type"] == "Fire" ? "selected" : ""; ?>>Fire</option>
+                    <option value="Police" <?php echo $edit_request["Type"] == "Police" ? "selected" : ""; ?>>Police</option>
+                </select>
+
+                <!-- Emergency description -->
+                <label>Description:</label>
+                <textarea name="description" required><?php echo htmlspecialchars($edit_request["Description"]); ?></textarea>
+
+                <!-- Admin can update status -->
+                <?php if ($_SESSION["Role"] == "Admin"): ?>
+                    <label>Status:</label>
+                    <select name="status">
+                        <option value="Pending" <?php echo $edit_request["Status"] == "Pending" ? "selected" : ""; ?>>Pending</option>
+                        <option value="Responded" <?php echo $edit_request["Status"] == "Responded" ? "selected" : ""; ?>>Responded</option>
+                    </select>
+                <?php endif; ?>
+
+                <!-- Submit button -->
+                <button type="submit">Update</button>
+            </form>
+        <?php endif; ?>
+
+        <!-- Back to Dashboard (role-based link) -->
+        <a href="<?php echo $_SESSION["Role"] == 'Admin' ? 'admin_dashboard.php' : 'user_dashboard.php'; ?>">Back to Dashboard</a>
+    </div>
+</body>
+</html>
