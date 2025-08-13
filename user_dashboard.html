@@ -1,0 +1,120 @@
+
+<html>
+<head>
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link to external CSS for styling -->
+    <link rel="stylesheet" href="user_dashboard.css">
+</head>
+<body>
+    <!-- Main layout container -->
+    <div class="layout">
+        <!-- Sidebar navigation -->
+        <div class="sidebar">
+            <!-- Sidebar heading -->
+            <h3>Smart City User</h3>
+            <!-- Navigation links -->
+            <a href="user_dashboard.php"><i class="fas fa-home"></i><span>Dashboard</span></a>
+            <a href="complaints.php"><i class="fas fa-exclamation-circle"></i><span>Complaints</span></a>
+            <a href="emergency_services.php"><i class="fas fa-ambulance"></i><span>Emergency Services</span></a>
+            <a href="transport.php"><i class="fas fa-bus"></i><span>Transport</span></a>
+            <a href="utility_bills.php"><i class="fas fa-file-invoice-dollar"></i><span>Utility Bills</span></a>
+            <a href="waste_management.php"><i class="fas fa-trash"></i><span>Waste Management</span></a>
+            <a href="events.php"><i class="fas fa-calendar-alt"></i><span>Events</span></a>
+            <a href="educational_institutes.php"><i class="fas fa-school"></i><span>Educational Institutes</span></a>
+            <a href="traffic_violations.php"><i class="fas fa-traffic-light"></i><span>Traffic Violations</span></a>
+            <a href="logout.php"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </div>
+
+        <!-- Main content area -->
+        <div class="main-content">
+            <!-- Top bar with heading and profile -->
+            <div class="top-bar">
+                <!-- Page heading -->
+                <h2>Dashboard</h2>
+                <!-- Profile box with initials or picture -->
+                <div class="profile-box">
+                    <?php if ($user['ProfilePicture']): ?>
+                        <!-- Display profile picture if available -->
+                        <a href="profile.php"><img src="<?php echo htmlspecialchars($user['ProfilePicture']); ?>" alt="Profile Picture"></a>
+                    <?php else: ?>
+                        <!-- Display initials if no profile picture -->
+                        <a href="profile.php"><?php echo htmlspecialchars(substr($user['FullName'], 0, 2)); ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Dashboard grid for services -->
+            <div class="dashboard-grid">
+                <!-- Complaints box -->
+                <a href="complaints.php" class="dashboard-box">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>File/View Complaints</span>
+                    <?php if ($pending_complaints > 0): ?>
+                        <!-- Show badge for pending complaints -->
+                        <span class="badge"><?php echo $pending_complaints; ?></span>
+                    <?php endif; ?>
+                </a>
+                
+                <!-- Emergency services box -->
+                <a href="emergency_services.php" class="dashboard-box">
+                    <i class="fas fa-ambulance"></i>
+                    <span>Emergency Services</span>
+                    <?php if ($pending_emergencies > 0): ?>
+                        <!-- Show badge for pending emergencies -->
+                        <span class="badge"><?php echo $pending_emergencies; ?></span>
+                    <?php endif; ?>
+                </a>
+                
+                <!-- Utility bills box -->
+                <a href="utility_bills.php" class="dashboard-box">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>View/Pay Bills</span>
+                    <?php if ($unpaid_bills > 0): ?>
+                        <!-- Show badge for unpaid bills -->
+                        <span class="badge"><?php echo $unpaid_bills; ?></span>
+                    <?php endif; ?>
+                </a>
+                
+                <!-- Traffic violations box -->
+                <a href="traffic_violations.php" class="dashboard-box">
+                    <i class="fas fa-traffic-light"></i>
+                    <span>Traffic Violations</span>
+                    <?php if ($pending_violations > 0): ?>
+                        <!-- Show badge for pending violations -->
+                        <span class="badge"><?php echo $pending_violations; ?></span>
+                    <?php endif; ?>
+                </a>
+                
+                <!-- Events box -->
+                <a href="events.php" class="dashboard-box">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>View Events</span>
+                    <?php if ($upcoming_events > 0): ?>
+                        <!-- Show badge for upcoming events -->
+                        <span class="badge"><?php echo $upcoming_events; ?></span>
+                    <?php endif; ?>
+                </a>
+                
+                <!-- Transport box -->
+                <a href="transport.php" class="dashboard-box">
+                    <i class="fas fa-bus"></i>
+                    <span>View Transport</span>
+                </a>
+                
+                <!-- Waste management box -->
+                <a href="waste_management.php" class="dashboard-box">
+                    <i class="fas fa-trash"></i>
+                    <span>View Waste Schedule</span>
+                </a>
+                
+                <!-- Educational institutes box -->
+                <a href="educational_institutes.php" class="dashboard-box">
+                    <i class="fas fa-school"></i>
+                    <span>View Educational Institutes</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
