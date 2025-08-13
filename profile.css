@@ -1,0 +1,75 @@
+/* Set default styles for the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+/* Style the main container for profile content */
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+/* Style the main heading */
+h2 {
+    color: #333;
+}
+/* Style the form for consistent layout */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+/* Style input fields and textareas */
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+/* Style disabled input fields */
+input:disabled {
+    background-color: #f8f9fa;
+}
+/* Style the submit button with a green theme */
+button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+/* Change button background on hover */
+button:hover {
+    background-color: #218838;
+}
+/* Style links with a green theme */
+a {
+    color: #28a745;
+    text-decoration: none;
+}
+/* Add underline to links on hover */
+a:hover {
+    text-decoration: underline;
+}
+/* Style success messages */
+.success {
+    color: green;
+    font-weight: bold;
+}
+/* Style error messages */
+.error {
+    color: red;
+    font-weight: bold;
+}
+/* Style the profile picture image */
+.profile-img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
