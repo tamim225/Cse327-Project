@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Set the page title -->
+    <title>Events</title>
+    <!-- Link to the external CSS stylesheet -->
+    <link rel="stylesheet" href="events.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Main heading for the events page -->
+        <h2>Events</h2>
+        <?php if ($_SESSION["Role"] == "Admin"): ?>
+            <h3>Add Event</h3>
+            <form action="events.php" method="POST">
+                <input type="hidden" name="action" value="create">
+                <!-- Input field for event title -->
+                <label>Title:</label>
+                <input type="text" name="title" required>
+                <!-- Textarea for event description -->
+                <label>Description:</label>
+                <textarea name="description" required></textarea>
+                <!-- Input field for event location -->
+                <label>Location:</label>
+                <input type="text" name="location" required>
+                <!-- Input field for event date -->
+                <label>Date:</label>
+                <input type="date" name="date" required>
+                <!-- Submit button for the form -->
+                <button type="submit">Add</button>
+            </form>
+        <?php endif; ?>
+        <!-- Section to display the list of events -->
+        <h3>City Events</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Status</th>
+                <?php if ($_SESSION["Role"] == "Admin"): ?>
+                    <th>Actions</th>
+                <?php endif; ?>
+            </tr>
+            <?php foreach ($events as $event): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($event["EventID"]); ?></td>
+                    <td><?php echo htmlspecialchars($event["Title"]); ?></td>
+                    <td><?php echo htmlspecialchars($event["Description"]); ?></td>
+                    <td><?php echo htmlspecialchars($event["Location"]); ?></td>
+                    <td><?php echo htmlspecialchars($event["Date"]); ?></td>
+                    <td><?php echo htmlspecialchars($event["Status"]); ?></td>
+                    <!-- Admin-only actions for editing and deleting events -->
+                    <?php if ($_SESSION["Role"] == "Admin"): ?>
+                        <td>
+                            <a href="events.php?action=edit&id=<?php echo $event["EventID"]; ?>">Edit</a>
+                            <a href="events.php?action=delete&id=<?php echo $event["EventID"]; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        <!-- Section for editing an event, displayed when edit_event is set -->
+        <?php if (isset($edit_event) && $_SESSION["Role"] == "Admin"): ?>
+            <h3>Edit Event</h3>
+            <form action="events.php" method="POST">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="id" value="<?php echo $edit_event["EventID"]; ?>">
+                <!-- Input field for editing event title -->
+                <label>Title:</label>
+                <input type="text" name="title" value="<?php echo htmlspecialchars($edit_event["Title"]); ?>" required>
+                <!-- Textarea for editing event description -->
+                <label>Description:</label>
+                <textarea name="description" required><?php echo htmlspecialchars($edit_event["Description"]); ?></textarea>
+                <!-- Input field for editing event location -->
+                <label>Location:</label>
+                <input type="text" name="location" value="<?php echo htmlspecialchars($edit_event["Location"]); ?>" required>
+                <!-- Input field for editing event date -->
+                <label>Date:</label>
+                <input type="date" name="date" value="<?php echo htmlspecialchars($edit_event["Date"]); ?>" required>
+                <!-- Status dropdown for editing event status -->
+                <label>Status:</label>
+                <select name="status">
+                    <option value="Upcoming" <?php echo $edit_event["Status"] == "Upcoming" ? "selected" : ""; ?>>Upcoming</option>
+                    <option value="Completed" <?php echo $edit_event["Status"] == "Completed" ? "selected" : ""; ?>>Completed</option>
+                </select>
+                <!-- Submit button for updating the event -->
+                <button type="submit">Update</button>
+            </form>
+        <?php endif; ?>
+        <!-- Link to return to the dashboard -->
+        <a href="<?php echo $_SESSION["Role"] == 'Admin' ? 'admin_dashboard.php' : 'user_dashboard.php'; ?>">Back to Dashboard</a>
+    </div>
+</body>
+</html>
