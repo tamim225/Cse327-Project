@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Set the page title -->
+    <title>Profile - Smart City</title>
+    <!-- Link to the external CSS stylesheet -->
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <!-- Main container for the profile page content -->
+    <div class="container">
+        <!-- Main heading for the profile page -->
+        <h2>Your Profile</h2>
+        <!-- Display success or error messages if set -->
+        <?php if ($flash = getFlash()): ?>
+            <p class="<?php echo $flash['type']; ?>"><?php echo htmlspecialchars($flash['message']); ?></p>
+        <?php endif; ?>
+        <!-- Form for updating profile information -->
+        <form action="profile.php" method="POST" enctype="multipart/form-data">
+            <!-- Display current profile picture or placeholder -->
+            <label>Profile Picture:</label>
+            <?php if ($user['ProfilePicture']): ?>
+                <img src="<?php echo htmlspecialchars($user['ProfilePicture']); ?>" alt="Profile Picture" class="profile-img">
+            <?php else: ?>
+                <p>No profile picture set.</p>
+            <?php endif; ?>
+            <!-- Input for uploading a new profile picture -->
+            <input type="file" name="profile_picture" accept="image/jpeg,image/png,image/gif">
+            <!-- Input field for editing full name -->
+            <label>Full Name:</label>
+            <input type="text" name="full_name" value="<?php echo htmlspecialchars($user['FullName']); ?>" required>
+            <!-- Display email (non-editable) -->
+            <label>Email (cannot be changed):</label>
+            <input type="email" value="<?php echo htmlspecialchars($user['Email']); ?>" disabled>
+            <!-- Input field for editing address -->
+            <label>Address:</label>
+            <textarea name="address" required><?php echo htmlspecialchars($user['Address']); ?></textarea>
+            <!-- Input field for editing phone number -->
+            <label>Phone:</label>
+            <input type="text" name="phone" value="<?php echo htmlspecialchars($user['Phone']); ?>" required pattern="[0-9]{10,15}" title="Phone number must be 10-15 digits">
+            <!-- Input field for updating password (optional) -->
+            <label>Password (leave blank to keep unchanged):</label>
+            <input type="password" name="password" placeholder="Enter new password">
+            <!-- Submit button for updating profile -->
+            <button type="submit">Update Profile</button>
+        </form>
+        <!-- Link to return to the appropriate dashboard based on user role -->
+        <a href="<?php echo $dashboard_url; ?>">Back to Dashboard</a>
+    </div>
+</body>
+</html>
