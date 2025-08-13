@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;  /* page back ground colour/*
+    margin: 0;
+}
+.container {
+    max-width: 1000px;    /* Limit container width to 1000px */
+    margin: 20px auto;   /* Add vertical margin and center container horizontally */
+    
+    padding: 20px;   /* Add inner space around content */
+    background-color: white;
+    border-radius: 8px;    /* Round the corners of the container */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h2, h3 {
+    color: #333;   /* Set heading text color to dark gray */
+}
+form {
+    display: flex;         /* Use flexbox layout for form elements */
+    flex-direction: column;  /* Stack form elements vertically */
+    gap: 10px;               /* Add space between form elements */
+    margin-bottom: 20px;     /* Space below the form */
+}
+input, select {
+    padding: 10px;  /* Inner space inside inputs and dropdowns */
+    border: 1px solid #ddd;  /* Light gray border */
+    border-radius: 4px;       /* Slightly rounded corners */
+}
+button {
+    padding: 10px;         /* Inner padding for button */
+    background-color: #ffc107;
+    color: black;
+    border: none;          /* Remove border */
+    border-radius: 4px;    /* Slightly rounded corners */
+    cursor: pointer;       /* Show pointer cursor when hovering */
+}
+button:hover {
+    background-color: #e0a800;  /* Darker yellow when hovered */
+}
+table {
+    width: 100%;  /* Table takes full width of container */
+    border-collapse: collapse;  /* Remove gaps between table borders */
+    margin-bottom: 20px;   /* Space below the table */
+}
+th, td {
+    padding: 10px;    /* Inner space in table cells */
+    border: 1px solid #ddd;     /* Light gray cell borders */
+    text-align: left;            /* Align text to the left */
+}
+th {
+    background-color: #f8f9fa;
+}
+a {
+    color: #ffc107;
+    text-decoration: none;   /* Remove underline from links */
+}
+a:hover {
+    text-decoration: underline;  /* Add underline when hovering over links */
+
+
+}
