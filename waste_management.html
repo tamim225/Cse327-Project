@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Waste Management</title> <!-- Page title shown in browser tab -->
+    <link rel="stylesheet" href="waste_management.css"> <!-- Link to external CSS stylesheet -->
+</head>
+
+<body>
+    <div class="container"> <!-- Main page container for styling and layout -->
+        <h2>Waste Management</h2> <!-- Main heading of the page -->
+        <?php if ($_SESSION["Role"] == "Admin"): ?>
+        <h3>Schedule Waste Collection</h3> <!-- Subheading for form -->
+
+
+        <!-- Form to create a new waste collection schedule -->
+        <form action="waste_management.php" method="POST">
+
+            <!-- Hidden input to indicate this form action is "create" -->
+            <input type="hidden" name="action" value="create">
+            <label>Area:</label> <!-- Input for the area name -->
+            <input type="text" name="area" required>
+            <label>Schedule:</label> <!-- Input for schedule details -->
+            <input type="text" name="schedule" required>
+
+            <!-- Submit button for creating schedule -->
+            <button type="submit">Schedule</button>
+        </form>
+        <?php endif; ?> <!-- End Admin check for create form -->
+        <h3>Waste Collection Schedules</h3> <!-- Subheading for schedules list -->
+        <table>
+            <tr> <!-- Table header row -->
+                <th>ID</th> <!-- Waste schedule ID -->
+                <th>Area</th> <!-- Area name -->
+                <th>Schedule</th> <!-- Collection date/time or description -->
+                <th>Status</th> <!-- Scheduled or Completed -->
+                <?php if ($_SESSION["Role"] == "Admin"): ?>
+                <th>Actions</th>
+                <?php endif; ?>
+            </tr>
+
+            <!-- Loop through all schedules and display them in table rows -->
+            <?php foreach ($schedules as $schedule): ?>
+            <tr>
+
+                <!-- Output WasteID, Area, Schedule, and Status securely using htmlspecialchars -->
+                <td>
+                    <?php echo htmlspecialchars($schedule["WasteID"]); ?>
+                </td>
+                <td>
+                    <?php echo htmlspecialchars($schedule["Area"]); ?>
+                </td>
+                <td>
+                    <?php echo htmlspecialchars($schedule["Schedule"]); ?>
+                </td>
+                <td>
+                    <?php echo htmlspecialchars($schedule["Status"]); ?>
+                </td>
+                <!-- If Admin, show Edit and Delete links -->
+                <?php if ($_SESSION["Role"] == "Admin"): ?>
+                <td>
+                    <!-- Edit link for this schedule -->
+                    <a href="waste_management.php?action=edit&id=<?php echo $schedule[" WasteID"]; ?>">Edit</a>
+
+                    <!-- Delete link with confirmation popup -->
+                    <a href="waste_management.php?action=delete&id=<?php echo $schedule[" WasteID"]; ?>" onclick="return
+                        confirm('Are you sure?')">Delete</a>
+                </td>
+                <?php endif; ?>
+            </tr>
+            <?php endforeach; ?> <!-- End loop through schedules -->
+        </table>
+
+        <!-- If Admin is editing a schedule, show Edit Waste Schedule form -->
+        <?php if (isset($edit_schedule) && $_SESSION["Role"] == "Admin"): ?>
+        <h3>Edit Waste Schedule</h3> <!-- Subheading for edit form -->
+
+        <!-- Form to update an existing waste collection schedule -->
+        <form action="waste_management.php" method="POST">
+            <input type="hidden" name="action" value="update"> <!-- Hidden field for action type -->
+            <input type="hidden" name="id" value="<?php echo $edit_schedule[" WasteID"]; ?>">
+            <!-- Editable Area input pre-filled with existing value -->
+            <label>Area:</label>
+            <input type="text" name="area" value="<?php echo htmlspecialchars($edit_schedule[" Area"]); ?>" required>
+
+            <!-- Editable Schedule input pre-filled with existing value -->
+            <label>Schedule:</label>
+            <input type="text" name="schedule" value="<?php echo htmlspecialchars($edit_schedule[" Schedule"]); ?>"
+            required>
+
+            <!-- Status dropdown with correct option selected -->
+            <label>Status:</label>
+            <select name="status">
+                <option value="Scheduled" <?php echo $edit_schedule["Status"]=="Scheduled" ? "selected" : "" ; ?>
+                    >Scheduled</option>
+                <option value="Completed" <?php echo $edit_schedule["Status"]=="Completed" ? "selected" : "" ; ?>
+                    >Completed</option>
+            </select>
+            <!-- Submit button to update schedule -->
+            <button type="submit">Update</button>
+        </form>
+        <?php endif; ?> <!-- End Admin check for edit form -->
+
+        <!-- Back to dashboard link (changes based on user role) -->
+        <a href="<?php echo $_SESSION[" Role"]=='Admin' ? 'admin_dashboard.php' : 'user_dashboard.php' ; ?>">Back to
+            Dashboard</a>
+    </div>
+</body> <!-- End of body -->
+
+</html> <!-- End of HTML document -->
