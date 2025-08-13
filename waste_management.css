@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;  /* Set default font to Arial, with sans-serif as fallback */
+    background-color: #f4f4f4;   /* Light gray background for the whole page */
+    margin: 0;                     /* Remove default browser margin */
+}
+.container {
+    max-width: 1000px;    /* Limit container width to 1000px */
+    margin: 20px auto;    /* Center container horizontally with 20px top/bottom margin */
+    padding: 20px;     /* Add inner spacing inside the container */
+    background-color: white;
+    border-radius: 8px;     /* Slightly round the corners of the container */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);  /* Add subtle shadow for depth */
+}
+h2, h3 {
+    color: #333;      /* Set heading text color to dark gray */
+}
+form {
+    display: flex;           /* Use flexbox layout for form elements */
+    flex-direction: column;   /* Stack form elements vertically */
+    gap: 10px;                 /* Add space between form elements */
+    margin-bottom: 20px;        /* Add space below the form */
+}
+input, select {
+    padding: 10px;           /* Add inner spacing inside inputs and dropdowns */
+    border: 1px solid #ddd;   /* Light gray border */
+    border-radius: 4px;            /* Slightly round input edges */
+}
+button {
+    padding: 10px;                     /* Add inner spacing inside button */
+    background-color: #6c757d;
+    color: white;
+    border: none;                      /* Remove default border */
+    border-radius: 4px;                /* Slightly round button corners */
+    cursor: pointer;                  /* Show pointer cursor when hovering */
+}
+button:hover {
+    background-color: #5a6268;     /* Darker gray when hovering over button */
+}
+table {
+    width: 100%;                   /* Table takes full width of container */
+    border-collapse: collapse;     /* Remove space between table cell borders */
+    margin-bottom: 20px;           /* Add space below the table */
+}
+th, td {
+    padding: 10px;              /* Add inner spacing inside table cells */
+    border: 1px solid #ddd;
+    text-align: left;            /* Align text to the left inside cells */
+}
+th {
+    background-color: #f8f9fa;   /* Light background color for table headers */
+}
+a {
+    color: #6c757d;                 /* Gray link color */
+    text-decoration: none;           /* Remove underline from links */
+}
+a:hover {
+    text-decoration: underline;    /* Add underline when hovering over links */
+}
