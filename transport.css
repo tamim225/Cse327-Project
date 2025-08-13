@@ -1,0 +1,81 @@
+
+body {
+    font-family: Arial, sans-serif; /* Set default font */
+    background-color: #f4f4f4; /* Light gray background for contrast */
+    margin: 0; /* Remove default body margin */
+}
+
+/* Main container to center and style content */
+.container {
+    max-width: 1000px; /* Limit content width for readability */
+    margin: 20px auto; /* Center horizontally with top/bottom margin */
+    padding: 20px; /* Inner spacing */
+    background-color: white; /* White background for content area */
+    border-radius: 8px; /* Slightly rounded corners */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Soft shadow for depth */
+}
+
+/* Headings styling */
+h2, h3 {
+    color: #333; /* Dark gray text for headings */
+}
+
+/* Form layout settings */
+form {
+    display: flex;
+    flex-direction: column; /* Stack form fields vertically */
+    gap: 10px; /* Space between form elements */
+    margin-bottom: 20px; /* Space after form */
+}
+
+/* Text inputs and dropdown menus */
+input, select {
+    padding: 10px; /* Comfortable clickable area */
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 4px; /* Rounded edges */
+}
+
+/* Primary action buttons */
+button {
+    padding: 10px;
+    background-color: #28a745; /* Green background for transport actions */
+    color: white; /* White button text */
+    border: none; /* Remove default button border */
+    border-radius: 4px; /* Rounded edges */
+    cursor: pointer; /* Show hand cursor on hover */
+}
+
+/* Button hover effect for better UX */
+button:hover {
+    background-color: #218838; /* Slightly darker green on hover */
+}
+
+/* Table styles for listing data */
+table {
+    width: 100%; /* Full-width tables */
+    border-collapse: collapse; /* Remove spacing between cells */
+    margin-bottom: 20px; /* Space below table */
+}
+
+/* Table cell styling */
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd; /* Light border around cells */
+    text-align: left; /* Align text to the left */
+}
+
+/* Table header background */
+th {
+    background-color: #f8f9fa; /* Light gray header background */
+}
+
+/* Link styles */
+a {
+    color: #28a745; /* Match transport theme green */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Hover effect for links */
+a:hover {
+    text-decoration: underline; /* Underline on hover for clarity */
+}

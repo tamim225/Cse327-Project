@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transport</title>
+    <!-- Link to CSS file for styling -->
+    <link rel="stylesheet" href="transport.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Transport</h2>
+
+        <!-- ADMIN: Add New Transport Route Form -->
+        <?php if ($_SESSION["Role"] == "Admin"): ?>
+            <h3>Add Transport Route</h3>
+            <form action="transport.php" method="POST">
+                <!-- Hidden input to tell PHP this is a 'create' action -->
+                <input type="hidden" name="action" value="create">
+
+                <!-- Route Name -->
+                <label>Route Name:</label>
+                <input type="text" name="route_name" required>
+
+                <!-- Vehicle Type -->
+                <label>Vehicle Type:</label>
+                <input type="text" name="vehicle_type" required>
+
+                <!-- Timing -->
+                <label>Timing:</label>
+                <input type="text" name="timing" required>
+
+                <!-- Status dropdown -->
+                <label>Status:</label>
+                <select name="status">
+                    <option value="Running">Running</option>
+                    <option value="Delayed">Delayed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+
+                <!-- Submit button -->
+                <button type="submit">Add</button>
+            </form>
+        <?php endif; ?>
+
+        <!-- List of All Transport Routes -->
+        <h3>Transport Routes</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Route Name</th>
+                <th>Vehicle Type</th>
+                <th>Timing</th>
+                <th>Status</th>
+                <?php if ($_SESSION["Role"] == "Admin"): ?>
+                    <th>Actions</th>
+                <?php endif; ?>
+            </tr>
+
+            <!-- Loop through each route and display in table -->
+            <?php foreach ($routes as $route): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($route["TransportID"]); ?></td>
+                    <td><?php echo htmlspecialchars($route["RouteName"]); ?></td>
+                    <td><?php echo htmlspecialchars($route["VehicleType"]); ?></td>
+                    <td><?php echo htmlspecialchars($route["Timing"]); ?></td>
+                    <td><?php echo htmlspecialchars($route["Status"]); ?></td>
+
+                    <!-- Admin-only edit/delete actions -->
+                    <?php if ($_SESSION["Role"] == "Admin"): ?>
+                        <td>
+                            <!-- Edit link -->
+                            <a href="transport.php?action=edit&id=<?php echo $route["TransportID"]; ?>">Edit</a>
+                            <!-- Delete link with confirmation prompt -->
+                            <a href="transport.php?action=delete&id=<?php echo $route["TransportID"]; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+
+        <!-- ADMIN: Edit Route Form (only visible when editing) -->
+        <?php if (isset($edit_route) && $_SESSION["Role"] == "Admin"): ?>
+            <h3>Edit Transport Route</h3>
+            <form action="transport.php" method="POST">
+                <!-- Hidden inputs to pass update action and route ID -->
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="id" value="<?php echo $edit_route["TransportID"]; ?>">
+
+                <!-- Route Name -->
+                <label>Route Name:</label>
+                <input type="text" name="route_name" value="<?php echo htmlspecialchars($edit_route["RouteName"]); ?>" required>
+
+                <!-- Vehicle Type -->
+                <label>Vehicle Type:</label>
+                <input type="text" name="vehicle_type" value="<?php echo htmlspecialchars($edit_route["VehicleType"]); ?>" required>
+
+                <!-- Timing -->
+                <label>Timing:</label>
+                <input type="text" name="timing" value="<?php echo htmlspecialchars($edit_route["Timing"]); ?>" required>
+
+                <!-- Status dropdown -->
+                <label>Status:</label>
+                <select name="status">
+                    <option value="Running" <?php echo $edit_route["Status"] == "Running" ? "selected" : ""; ?>>Running</option>
+                    <option value="Delayed" <?php echo $edit_route["Status"] == "Delayed" ? "selected" : ""; ?>>Delayed</option>
+                    <option value="Cancelled" <?php echo $edit_route["Status"] == "Cancelled" ? "selected" : ""; ?>>Cancelled</option>
+                </select>
+
+                <!-- Submit button -->
+                <button type="submit">Update</button>
+            </form>
+        <?php endif; ?>
+
+        <!-- Back to Dashboard link (different for admin & user) -->
+        <a href="<?php echo $_SESSION["Role"] == 'Admin' ? 'admin_dashboard.php' : 'user_dashboard.php'; ?>">Back to Dashboard</a>
+    </div>
+</body>
+</html>
